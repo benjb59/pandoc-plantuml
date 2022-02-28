@@ -35,6 +35,7 @@ COPY --from=build-env /usr/local/lib/python3.9/dist-packages/ /usr/local/lib/pyt
 COPY --from=build-env /usr/bin/plantuml /usr/bin/plantuml
 COPY --from=build-env /usr/local/bin/pandoc-plantuml /usr/local/bin/pandoc-plantuml
 COPY --from=build-env /opt/plantuml/ /opt/plantuml/
+COPY --from=build-env /opt/openjdk-17-slim/ /opt/openjdk-17-slim/
 
 WORKDIR /var/docs/
 ENTRYPOINT ["pandoc", "--filter", "pandoc-plantuml"]
