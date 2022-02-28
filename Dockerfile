@@ -17,7 +17,7 @@ RUN /tmp/jdk-17.0.2/bin/jlink --output /opt/openjdk-17-slim \
 RUN mkdir -p /opt/plantuml/ 
 RUN wget https://github.com/plantuml/plantuml/releases/download/v1.2022.1/plantuml-1.2022.1.jar -P /opt/plantuml/ 
 RUN echo '#!/bin/bash\n\
-    java -jar /opt/plantuml/plantuml-1.2022.1.jar $@' > /usr/bin/plantuml
+    /opt/openjdk-17-slim/bin/java -jar /opt/plantuml/plantuml-1.2022.1.jar $@' > /usr/bin/plantuml
 RUN chmod a+x /usr/bin/plantuml
 
 #
