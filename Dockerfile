@@ -19,7 +19,7 @@ RUN chmod a+x /usr/bin/plantuml
 #
 FROM adoptopenjdk/openjdk11:debian as setup-env
 
-RUN apk update && apk add -y python3 pandoc graphviz libfreetype6 fontconfig git \
+RUN apt-get update && apt-get install -y python3 pandoc graphviz libfreetype6 fontconfig git \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
