@@ -1,7 +1,7 @@
 #
 # Build stage
 #
-FROM adoptopenjdk/openjdk11:debian as build-env
+FROM adoptopenjdk/openjdk16:debian as build-env
 
 RUN apt-get update && apt-get install -y python3-pip wget
 RUN pip3 install pandoc-plantuml-filter
@@ -17,7 +17,7 @@ RUN chmod a+x /usr/bin/plantuml
 #
 # Run stage
 #
-FROM adoptopenjdk/openjdk11:debian as setup-env
+FROM adoptopenjdk/openjdk16:debian as setup-env
 
 RUN apt-get update && apt-get install -y python3 pandoc graphviz libfreetype6 fontconfig git \
     && apt-get clean \
