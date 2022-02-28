@@ -3,7 +3,7 @@
 #
 FROM openjdk:latest as build-env
 
-RUN apt-get update && apt-get install -y python3-pip wget
+RUN apk update && apk add -y python3-pip wget
 RUN pip3 install pandoc-plantuml-filter
 
 # make plant UML
@@ -19,9 +19,7 @@ RUN chmod a+x /usr/bin/plantuml
 #
 FROM  openjdk:latest as setup-env
 
-RUN apt-get update && apt-get install -y python3 pandoc graphviz libfreetype6 fontconfig git \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+RUN apk update && apk add -y python3 pandoc graphviz libfreetype6 fontconfig git
 
 RUN ln -s /usr/bin/python3 /usr/bin/python
 
