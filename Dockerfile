@@ -1,9 +1,9 @@
 #
 # Build stage
 #
-FROM eclipse-temurin:17.0.2_8-jre-alpine as build-env
+FROM adoptopenjdk/openjdk11:debian as build-env
 
-RUN apk add --update --no-cache python3-pip wget
+RUN apt-get update && apt-get install -y python3-pip wget
 RUN pip3 install pandoc-plantuml-filter
 
 # make plant UML
@@ -14,10 +14,14 @@ RUN echo '#!/bin/bash\n\
     java -jar /opt/plantuml/plantuml-1.2022.1.jar $@' > /usr/bin/plantuml
 RUN chmod a+x /usr/bin/plantuml
 
+#
 # Run stage
-FROM  eclipse-temurin:17.0.2_8-jre-alpine as setup-env
+#
+FROM adoptopenjdk/openjdk11:debian as setup-env
 
-RUN apk add --update --no-cache python3 pandoc graphviz libfreetype6 fontconfig git
+RUN apk update && apk add -y python3 pandoc graphviz libfreetype6 fontconfig git \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 RUN ln -s /usr/bin/python3 /usr/bin/python
 
