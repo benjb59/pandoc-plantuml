@@ -1,7 +1,7 @@
 #
 # Build stage
 #
-FROM eclipse-temurin:17.0.2_8-jre-centos7 as build-env
+FROM eclipse-temurin:17.0.2_8-jre-alpine as build-env
 
 RUN apk add --update --no-cache python3-pip wget
 RUN pip3 install pandoc-plantuml-filter
@@ -15,7 +15,7 @@ RUN echo '#!/bin/bash\n\
 RUN chmod a+x /usr/bin/plantuml
 
 # Run stage
-FROM  eclipse-temurin:17.0.2_8-jre-centos7 as setup-env
+FROM  eclipse-temurin:17.0.2_8-jre-alpine as setup-env
 
 RUN apk add --update --no-cache python3 pandoc graphviz libfreetype6 fontconfig git
 
