@@ -33,6 +33,8 @@ RUN export DEBIAN_FRONTEND=noninteractive \
   && apt-get -y -q autoremove \
   && rm -rf /var/lib/apt/lists/
 
+RUN ln -s /usr/bin/nodejs /usr/bin/node
+
 RUN ln -sf /node_modules/.bin/mmdc /usr/bin/mmdc
 
 RUN yarn add mermaid mermaid.cli 
