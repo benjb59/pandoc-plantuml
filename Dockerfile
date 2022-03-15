@@ -26,14 +26,11 @@ RUN export DEBIAN_FRONTEND=noninteractive \
   libgtk-3-dev \
   libnss3 \
   wget \
-  nodejs \
   && wget -O- https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add \
   && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
   && apt-get update && apt-get install -y -q yarn \
   && apt-get -y -q autoremove \
   && rm -rf /var/lib/apt/lists/
-
-RUN ln -sf /usr/bin/nodejs /usr/bin/node
 
 RUN ln -sf /node_modules/.bin/mmdc /usr/bin/mmdc
 
@@ -61,7 +58,7 @@ RUN chmod a+x /usr/bin/plantuml
 #
 FROM debian:latest as setup-env
 
-RUN apt-get update && apt-get install -y python3 pandoc graphviz libfreetype6 fontconfig git \
+RUN apt-get update && apt-get install -y python3 pandoc graphviz libfreetype6 fontconfig git nodejs \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
