@@ -3,39 +3,6 @@
 #
 FROM debian:latest as build-env
 
-# make mermaid mermaid-cli
-RUN export DEBIAN_FRONTEND=noninteractive \
-  && apt-get update \
-  && apt-get install -y -q \
-  texlive-latex-base \
-  texlive-fonts-recommended \
-  texlive-latex-extra \
-  texlive-xetex \
-  python3-pip \
-  libx11-xcb-dev \
-  libxcomposite-dev \
-  libxcursor-dev \
-  libxdamage-dev \
-  libxtst-dev \
-  libxss-dev \
-  libxrandr-dev \
-  libasound-dev \
-  libatk1.0-dev \
-  libatk-bridge2.0-dev \
-  libpango1.0-dev \
-  libgtk-3-dev \
-  libnss3 \
-  wget \
-  && wget -O- https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add \
-  && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
-  && apt-get update && apt-get install -y -q yarn \
-  && apt-get -y -q autoremove \
-  && rm -rf /var/lib/apt/lists/
-
-RUN ln -sf /node_modules/.bin/mmdc /usr/bin/mmdc
-
-RUN yarn add mermaid mermaid.cli 
-
 # make filter
 RUN apt-get update && apt-get install -y python3-pip wget
 RUN pip3 install pandoc-plantuml-filter pandoc-mermaid-filter
@@ -53,6 +20,19 @@ RUN echo '#!/bin/bash\n\
     /opt/openjdk-17-slim/bin/java -jar /opt/plantuml/plantuml-1.2022.1.jar $@' > /usr/bin/plantuml
 RUN chmod a+x /usr/bin/plantuml
 
+RUN export DEBIAN_FRONTEND=noninteractive \
+  && apt-get update \
+  && apt-get install -y -q \
+  wget \
+  && wget -O- https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add \
+  && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
+  && apt-get update && apt-get install -y -q yarn \
+  && apt-get -y -q autoremove \
+  && rm -rf /var/lib/apt/lists/
+
+RUN ln -sf /node_modules/.bin/mmdc /usr/bin/mmdc
+
+
 #
 # Run stage
 #
@@ -61,6 +41,29 @@ FROM debian:latest as setup-env
 RUN apt-get update && apt-get install -y python3 pandoc graphviz libfreetype6 fontconfig git nodejs \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
+
+RUN export DEBIAN_FRONTEND=noninteractive \
+  && apt-get update \
+  && apt-get install -y -q \
+  texlive-latex-base \
+  texlive-fonts-recommended \
+  texlive-latex-extra \
+  texlive-xetex \
+  libx11-xcb-dev \
+  libxcomposite-dev \
+  libxcursor-dev \
+  libxdamage-dev \
+  libxtst-dev \
+  libxss-dev \
+  libxrandr-dev \
+  libasound-dev \
+  libatk1.0-dev \
+  libatk-bridge2.0-dev \
+  libpango1.0-dev \
+  libgtk-3-dev \
+  libnss3
+
+RUN yarn add mermaid mermaid.cli 
 
 RUN ln -s /usr/bin/python3 /usr/bin/python
 
