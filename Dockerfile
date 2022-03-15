@@ -74,7 +74,9 @@ COPY --from=build-env /opt/openjdk-17-slim/ /opt/openjdk-17-slim/
 COPY --from=build-env /node_modules /usr/local/lib/node_modules
 RUN ln -sf /usr/local/lib/node_modules/.bin/mmdc /usr/bin/mermaid
 
-RUN echo "kernel.unprivileged_userns_clone=1" >> /etc/sysctl.conf
+RUN mkdir /opt/puppeteer && echo {"args": ["--no-sandbox", "--disable-setuid-sandbox"]} > /opt/puppeteer/puppeteer.json
+
+ENV PUPPETEER_CFG=/opt/puppeteer/puppeteer.json
 
 RUN useradd -u 1000 pandoc
 
