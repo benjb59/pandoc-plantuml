@@ -3,8 +3,42 @@
 #
 FROM debian:latest as build-env
 
+# make mermaid mermaid-cli
+RUN export DEBIAN_FRONTEND=noninteractive \
+  && apt-get update \
+  && apt-get install -y -q \
+  texlive-latex-base \
+  texlive-fonts-recommended \
+  texlive-latex-extra \
+  texlive-xetex \
+  python3-pip \
+  libx11-xcb-dev \
+  libxcomposite-dev \
+  libxcursor-dev \
+  libxdamage-dev \
+  libxtst-dev \
+  libxss-dev \
+  libxrandr-dev \
+  libasound-dev \
+  libatk1.0-dev \
+  libatk-bridge2.0-dev \
+  libpango1.0-dev \
+  libgtk-3-dev \
+  libnss3 \
+  wget \
+  && wget -O- https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add \
+  && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
+  && apt-get update && apt-get install -y -q yarn \
+  && apt-get -y -q autoremove \
+  && rm -rf /var/lib/apt/lists/
+
+RUN ln -sf /node_modules/.bin/mmdc /usr/bin/mmdc
+
+RUN yarn add mermaid mermaid.cli 
+
+# make filter
 RUN apt-get update && apt-get install -y python3-pip wget
-RUN pip3 install pandoc-plantuml-filter
+RUN pip3 install pandoc-plantuml-filter pandoc-mermaid-filter
 
 # make slim-jdk
 RUN wget https://download.java.net/java/GA/jdk17.0.2/dfd4a8d0985749f896bed50d7138ee7f/8/GPL/openjdk-17.0.2_linux-x64_bin.tar.gz -P /tmp/
@@ -13,7 +47,6 @@ RUN /tmp/jdk-17.0.2/bin/jlink --output /opt/openjdk-17-slim \
     --add-modules java.base,java.datatransfer,java.desktop,java.logging,java.prefs,java.scripting,java.xml
 
 # make plant UML
-
 RUN mkdir -p /opt/plantuml/ 
 RUN wget https://github.com/plantuml/plantuml/releases/download/v1.2022.1/plantuml-1.2022.1.jar -P /opt/plantuml/ 
 RUN echo '#!/bin/bash\n\
@@ -33,8 +66,10 @@ RUN ln -s /usr/bin/python3 /usr/bin/python
 
 COPY --from=build-env /usr/local/lib/python3.9/dist-packages/ /usr/local/lib/python3.9/dist-packages/
 COPY --from=build-env /usr/bin/plantuml /usr/bin/plantuml
+COPY --from=build-env /usr/bin/mmdc /usr/bin/mmdc
 COPY --from=build-env /usr/local/bin/pandoc-plantuml /usr/local/bin/pandoc-plantuml
 COPY --from=build-env /opt/plantuml/ /opt/plantuml/
+COPY --from=build-env /usr/local/bin/pandoc-mermaid /usr/local/bin/pandoc-mermaid
 COPY --from=build-env /opt/openjdk-17-slim/ /opt/openjdk-17-slim/
 
 WORKDIR /var/docs/
