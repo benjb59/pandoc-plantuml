@@ -73,5 +73,10 @@ COPY --from=build-env /opt/openjdk-17-slim/ /opt/openjdk-17-slim/
 COPY --from=build-env /node_modules /usr/local/lib/node_modules
 RUN ln -sf /usr/local/lib/node_modules/.bin/mmdc /usr/bin/mermaid
 
+RUN useradd -u 1000 pandoc
+
+USER pandoc
+
 WORKDIR /var/docs/
+
 ENTRYPOINT ["pandoc", "--filter", "pandoc-plantuml"]
