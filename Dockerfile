@@ -60,7 +60,8 @@ RUN export DEBIAN_FRONTEND=noninteractive \
   libatk-bridge2.0-dev \
   libpango1.0-dev \
   libgtk-3-dev \
-  libnss3
+  libnss3 \
+  nano
 
 RUN ln -s /usr/bin/python3 /usr/bin/python
 
