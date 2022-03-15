@@ -66,7 +66,7 @@ RUN ln -s /usr/bin/python3 /usr/bin/python
 
 COPY --from=build-env /usr/local/lib/python3.9/dist-packages/ /usr/local/lib/python3.9/dist-packages/
 COPY --from=build-env /usr/bin/plantuml /usr/bin/plantuml
-COPY --from=build-env /usr/bin/mmdc /usr/bin/mmdc
+COPY --from=build-env /usr/bin/mmdc /usr/bin/mermaid
 COPY --from=build-env /usr/local/bin/pandoc-plantuml /usr/local/bin/pandoc-plantuml
 COPY --from=build-env /opt/plantuml/ /opt/plantuml/
 COPY --from=build-env /usr/local/bin/pandoc-mermaid /usr/local/bin/pandoc-mermaid
