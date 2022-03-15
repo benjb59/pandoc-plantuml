@@ -4,8 +4,9 @@
 FROM debian:latest as build-env
 
 # make filter
-RUN apt-get update && apt-get install -y python3-pip wget
-RUN pip3 install pandoc-plantuml-filter pandoc-mermaid-filter
+RUN apt-get update && apt-get install -y python3-pip setuptools wget
+RUN pip3 install pandoc-plantuml-filter
+RUN git clone https://github.com/timofurrer/pandoc-mermaid-filter.git && python3 pandoc-mermaid-filter/setup.py install
 
 # make slim-jdk
 RUN wget https://download.java.net/java/GA/jdk17.0.2/dfd4a8d0985749f896bed50d7138ee7f/8/GPL/openjdk-17.0.2_linux-x64_bin.tar.gz -P /tmp/
@@ -30,7 +31,7 @@ RUN export DEBIAN_FRONTEND=noninteractive \
   && apt-get -y -q autoremove \
   && rm -rf /var/lib/apt/lists/
 
-RUN yarn add mermaid mermaid.cli 
+RUN yarn add mermaid mermaid.cli
 
 #
 # Run stage
