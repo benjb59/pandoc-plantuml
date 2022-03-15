@@ -30,6 +30,8 @@ RUN export DEBIAN_FRONTEND=noninteractive \
   && apt-get -y -q autoremove \
   && rm -rf /var/lib/apt/lists/
 
+RUN yarn add mermaid mermaid.cli 
+
 RUN ln -sf /node_modules/.bin/mmdc /usr/bin/mmdc
 
 
@@ -62,8 +64,6 @@ RUN export DEBIAN_FRONTEND=noninteractive \
   libpango1.0-dev \
   libgtk-3-dev \
   libnss3
-
-RUN yarn add mermaid mermaid.cli 
 
 RUN ln -s /usr/bin/python3 /usr/bin/python
 
