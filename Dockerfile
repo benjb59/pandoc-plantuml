@@ -4,7 +4,7 @@
 FROM debian:latest as build-env
 
 # make filter
-RUN apt-get update && apt-get install -y python3-pip setuptools wget
+RUN apt-get update && apt-get install -y python3-pip python-setuptools wget
 RUN pip3 install pandoc-plantuml-filter
 RUN git clone https://github.com/timofurrer/pandoc-mermaid-filter.git && python3 pandoc-mermaid-filter/setup.py install
 
