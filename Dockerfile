@@ -45,10 +45,10 @@ RUN apt-get update && apt-get install -y python3 pandoc graphviz libfreetype6 fo
 RUN export DEBIAN_FRONTEND=noninteractive \
   && apt-get update \
   && apt-get install -y -q \
-  texlive-latex-base \
-  texlive-fonts-recommended \
-  texlive-latex-extra \
-  texlive-xetex \
+  #texlive-latex-base \
+  #texlive-fonts-recommended \
+  #texlive-latex-extra \
+  #texlive-xetex \
   libx11-xcb-dev \
   libxcomposite-dev \
   libxcursor-dev \
