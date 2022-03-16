@@ -38,13 +38,14 @@ RUN yarn add mermaid mermaid.cli
 #
 FROM debian:bullseye-slim as setup-env
 
-RUN apt-get update && apt-get install -y nodejs pandoc graphviz libfreetype6 fontconfig git
-    #&& apt-get clean \
-    #&& rm -rf /var/lib/apt/lists/*
-
 RUN export DEBIAN_FRONTEND=noninteractive \
   && apt-get update \
   && apt-get install -y -q \
+  pandoc \
+  graphviz \
+  libfreetype6 \
+  fontconfig \
+  git \
   #texlive-latex-base \
   #texlive-fonts-recommended \
   #texlive-latex-extra \
@@ -62,10 +63,11 @@ RUN export DEBIAN_FRONTEND=noninteractive \
   libpango1.0-dev \
   libgtk-3-dev \
   libnss3 \
-  nano
+  nano \
+  && apt-get clean \
+  && rm -rf /var/lib/apt/lists/*
 
 RUN ln -s /usr/bin/python3 /usr/bin/python
-#RUN ln -s /usr/bin/nodejs /usr/bin/node
 
 COPY --from=build-env /usr/local/lib/python3.9/dist-packages/ /usr/local/lib/python3.9/dist-packages/
 COPY --from=build-env /usr/bin/plantuml /usr/bin/plantuml
