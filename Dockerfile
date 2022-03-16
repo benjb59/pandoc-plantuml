@@ -5,7 +5,7 @@ FROM debian:latest as build-env
 
 # make filter
 RUN apt-get update && apt-get install -y python3-pip python3-setuptools git wget
-RUN pip3 install pandoc-plantuml-filter
+RUN pip3 install pandoc-plantuml-filter importlib-metadata
 RUN git clone https://github.com/timofurrer/pandoc-mermaid-filter.git && cd pandoc-mermaid-filter && python3 setup.py install && cd ..
 
 # make slim-jdk
