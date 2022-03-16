@@ -66,6 +66,8 @@ RUN export DEBIAN_FRONTEND=noninteractive \
 
 #RUN ln -s /usr/bin/python3 /usr/bin/python
 
+RUN ln -s /usr/bin/nodejs /usr/bin/node
+
 COPY --from=build-env /usr/local/lib/python3.9/dist-packages/ /usr/local/lib/python3.9/dist-packages/
 COPY --from=build-env /usr/bin/plantuml /usr/bin/plantuml
 COPY --from=build-env /usr/local/bin/pandoc-plantuml /usr/local/bin/pandoc-plantuml
