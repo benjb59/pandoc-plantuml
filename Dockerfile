@@ -38,7 +38,7 @@ RUN yarn add mermaid mermaid.cli
 #
 FROM debian:bullseye-slim as setup-env
 
-RUN apt-get update && apt-get install -y python3-pip nodejs pandoc graphviz libfreetype6 fontconfig git
+RUN apt-get update && apt-get install -y nodejs pandoc graphviz libfreetype6 fontconfig git
     #&& apt-get clean \
     #&& rm -rf /var/lib/apt/lists/*
 
