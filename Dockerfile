@@ -1,7 +1,7 @@
 #
 # Build stage
 #
-FROM debian:bullseye as build-env
+FROM debian:bullseye-slim as build-env
 
 # make filter
 RUN apt-get update && apt-get install -y python3-pip python3-setuptools git wget
@@ -38,9 +38,9 @@ RUN yarn add mermaid mermaid.cli
 #
 FROM debian:bullseye-slim as setup-env
 
-RUN apt-get update && apt-get install -y python3-pip nodejs pandoc graphviz libfreetype6 fontconfig git \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y python3-pip nodejs pandoc graphviz libfreetype6 fontconfig git
+    #&& apt-get clean \
+    #&& rm -rf /var/lib/apt/lists/*
 
 RUN export DEBIAN_FRONTEND=noninteractive \
   && apt-get update \
