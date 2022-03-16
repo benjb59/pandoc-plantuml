@@ -1,11 +1,11 @@
 #
 # Build stage
 #
-FROM debian:latest as build-env
+FROM debian:bullseye as build-env
 
 # make filter
 RUN apt-get update && apt-get install -y python3-pip python3-setuptools git wget
-RUN pip3 install pandoc-plantuml-filter importlib-metadata
+RUN pip3 install pandoc-plantuml-filter
 RUN git clone https://github.com/timofurrer/pandoc-mermaid-filter.git && cd pandoc-mermaid-filter && python3 setup.py install && cd ..
 
 # make slim-jdk
@@ -36,9 +36,9 @@ RUN yarn add mermaid mermaid.cli
 #
 # Run stage
 #
-FROM debian:stretch-slim as setup-env
+FROM debian:bullseye-slim as setup-env
 
-RUN apt-get update && apt-get install -y python3 pandoc graphviz libfreetype6 fontconfig git nodejs \
+RUN apt-get update && apt-get install -y python3-pip nodejs pandoc graphviz libfreetype6 fontconfig git \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -64,8 +64,7 @@ RUN export DEBIAN_FRONTEND=noninteractive \
   libnss3 \
   nano
 
-#RUN ln -s /usr/bin/python3 /usr/bin/python
-
+RUN ln -s /usr/bin/python3 /usr/bin/python
 RUN ln -s /usr/bin/nodejs /usr/bin/node
 
 COPY --from=build-env /usr/local/lib/python3.9/dist-packages/ /usr/local/lib/python3.9/dist-packages/
