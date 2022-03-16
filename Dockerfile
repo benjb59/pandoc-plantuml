@@ -64,9 +64,9 @@ RUN export DEBIAN_FRONTEND=noninteractive \
   libpango1.0-dev \
   libgtk-3-dev \
   libnss3 \
-  nano
-  #&& apt-get clean \
-  #&& rm -rf /var/lib/apt/lists/*
+  nano \
+  && apt-get clean \
+  && rm -rf /var/lib/apt/lists/*
 
 RUN ln -s /usr/bin/python3 /usr/bin/python
 
