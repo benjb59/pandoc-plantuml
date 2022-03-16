@@ -36,7 +36,7 @@ RUN yarn add mermaid mermaid.cli
 #
 # Run stage
 #
-FROM debian:stretch as setup-env
+FROM debian:stretch-slim as setup-env
 
 RUN apt-get update && apt-get install -y python3 pandoc graphviz libfreetype6 fontconfig git nodejs \
     && apt-get clean \
@@ -64,7 +64,7 @@ RUN export DEBIAN_FRONTEND=noninteractive \
   libnss3 \
   nano
 
-RUN ln -s /usr/bin/python3 /usr/bin/python
+#RUN ln -s /usr/bin/python3 /usr/bin/python
 
 COPY --from=build-env /usr/local/lib/python3.9/dist-packages/ /usr/local/lib/python3.9/dist-packages/
 COPY --from=build-env /usr/bin/plantuml /usr/bin/plantuml
