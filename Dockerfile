@@ -36,7 +36,7 @@ RUN yarn add mermaid mermaid.cli
 #
 # Run stage
 #
-FROM debian:latest as setup-env
+FROM debian:stretch as setup-env
 
 RUN apt-get update && apt-get install -y python3 pandoc graphviz libfreetype6 fontconfig git nodejs \
     && apt-get clean \
