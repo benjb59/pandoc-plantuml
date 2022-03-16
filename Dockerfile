@@ -41,6 +41,7 @@ FROM debian:bullseye-slim as setup-env
 RUN export DEBIAN_FRONTEND=noninteractive \
   && apt-get update \
   && apt-get install -y -q \
+  nodejs \
   pandoc \
   graphviz \
   libfreetype6 \
