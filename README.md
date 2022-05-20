@@ -9,8 +9,8 @@ Bob -> Alice : Hello!
 
 foo@bar:~$ alias pandoc="docker run -it -v `pwd`:/var/docs melobenja/pandoc-plantuml-mermaid:v0.0.2"
 
-foo@bar:~$ pandoc -i input.md -o output.odt
+foo@bar:~$ pandoc -o output.odt input.md
 
 foo@bar:~$ ls
-output.odt      plantuml-images
+intput.md      output.odt      plantuml-images
 ```
