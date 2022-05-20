@@ -6,10 +6,10 @@ jobs:
   main:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v2          
       - name: Docker meta
         id: docker_meta
-        uses: crazy-max/ghaction-docker-meta@v1.8.4
+        uses: docker/metadata-action@v3
         with:
           images: melobenja/pandoc-plantuml-mermaid # list of Docker images to use as base name for tags
       - name: Set up QEMU
@@ -31,6 +31,6 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: |
             ${{ steps.docker_meta.outputs.tags }}
-            ${{ github.ref == 'refs/heads/master' && 'melobenja/pandoc-plantuml:latest' || '' }}
+            ${{ github.ref == 'refs/heads/main' && 'melobenja/pandoc-plantuml:latest' || '' }}
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
